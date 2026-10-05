@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Structures Laboratory | 1BCSL306</title>
+    <meta
+      name="description"
+      content="Website version of the Data Structures Laboratory manual for VTU course 1BCSL306."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand-wrap">
+        <div class="brand-mark">DS</div>
+        <div>
+          <p class="eyebrow">Cambridge Institute of Technology</p>
+          <h1>Data Structures Laboratory</h1>
+        </div>
+      </div>
+      <nav class="topnav" aria-label="Main navigation">
+        <a href="#overview">Overview</a>
+        <a href="#syllabus">Syllabus</a>
+        <a href="#experiments">Experiments</a>
+        <a href="#viva">Viva</a>
+        <a href="DataStructures_Lab_Manual_1BCSL306_Revised.pdf" target="_blank" rel="noreferrer">Original PDF</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="kicker">Course Code: 1BCSL306 | Semester: III | Scheme: 2025 (VTU CBCS)</p>
+          <h2>Lab manual converted into a clean, browsable website version.</h2>
+          <p>
+            This page recreates the lab manual content for the Data Structures Laboratory, including
+            the syllabus, course outcomes, fixed experiments, open-ended experiments, and sample lab
+            programs with outputs.
+          </p>
+          <div class="cta-row">
+            <a class="button primary" href="#experiments">Explore experiments</a>
+            <a class="button secondary" href="DataStructures_Lab_Manual_1BCSL306_Revised.pdf" target="_blank" rel="noreferrer">Open PDF</a>
+          </div>
+        </div>
+        <div class="hero-panel">
+          <div class="panel-box">
+            <h3>Course outcomes</h3>
+            <ul>
+              <li>Develop C programs using fundamental data structures.</li>
+              <li>Use suitable structures to solve real-world problems.</li>
+              <li>Document algorithms, implementation, outputs and inferences.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="overview" class="section">
+        <div class="section-header">
+          <p class="eyebrow">Overview</p>
+          <h2>Program structure</h2>
+        </div>
+        <div class="stats-grid">
+          <article class="stat-card">
+            <span>Credits</span>
+            <strong>1</strong>
+          </article>
+          <article class="stat-card">
+            <span>Teaching Hours</span>
+            <strong>2 hrs/week</strong>
+          </article>
+          <article class="stat-card">
+            <span>Exam Type</span>
+            <strong>Practical</strong>
+          </article>
+          <article class="stat-card">
+            <span>Assessment</span>
+            <strong>CIE + SEE</strong>
+          </article>
+        </div>
+      </section>
+
+      <section id="syllabus" class="section">
+        <div class="section-header">
+          <p class="eyebrow">Syllabus</p>
+          <h2>Part A and Part B experiments</h2>
+        </div>
+        <div class="syllabus-grid">
+          <div class="panel">
+            <h3>Part A: Fixed set of experiments</h3>
+            <ol>
+              <li>Library Record Management System using structures and dynamic memory.</li>
+              <li>Stack operations with push/pop, palindrome, overflow and underflow.</li>
+              <li>Printer queue simulation using queue data structure.</li>
+              <li>Singly linked list of student records.</li>
+              <li>Binary tree creation and traversals.</li>
+              <li>Graph representation using adjacency matrix and DFS/BFS.</li>
+            </ol>
+          </div>
+          <div class="panel">
+            <h3>Part B: Open-ended experiments</h3>
+            <ol>
+              <li>Sparse matrix using 3-tuple representation and matrix addition.</li>
+              <li>Infix to postfix conversion tool using stack.</li>
+              <li>Circular queue operations with floating point data.</li>
+              <li>Doubly linked list of employee data used as deque.</li>
+              <li>Binary search tree creation, traversal and search.</li>
+              <li>Employee record management system using hashing.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section id="experiments" class="section">
+        <div class="section-header">
+          <p class="eyebrow">Manual</p>
+          <h2>Experimental programs</h2>
+        </div>
+
+        <article class="lab-card">
+          <div class="lab-meta">
+            <span>Program A-1</span>
+            <span>Library Management System</span>
+          </div>
+          <h3>Library record management using structures and dynamic memory</h3>
+          <p>
+            Develop a program in C to define a structure <code>Book</code> with fields such as
+            <code>Book_ID</code>, <code>Title</code>, <code>Author</code>, <code>Price</code>, and
+            <code>Status</code>; dynamically allocate memory for <code>N</code> books; and implement
+            <code>create()</code>, <code>display()</code>, <code>search()</code>, <code>issueBook()</code>,
+            and <code>returnBook()</code> through a menu-driven system.
+          </p>
+          <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+struct Book {
+    int Book_ID;
+    char Title[30];
+    char Author[30];
+    float Price;
+    char Status[15];
+};
+
+struct Book *list;
+int n;
+
+void create() {
+    int i;
+    printf("Enter number of books: ");
+    scanf("%d", &n);
+    list = (struct Book *)malloc(n * sizeof(struct Book));
+    for (i = 0; i &lt; n; i++) {
+        printf("\nEnter details of book %d\n", i + 1);
+        printf("Book ID   : ");
+        scanf("%d", &list[i].Book_ID);
+        printf("Title     : ");
+        scanf(" %[^\n]", list[i].Title);
+        printf("Author    : ");
+        scanf(" %[^\n]", list[i].Author);
+        printf("Price     : ");
+        scanf("%f", &list[i].Price);
+        strcpy(list[i].Status, "Available");
+    }
+}
+
+void display() {
+    int i;
+    printf("\n%-8s%-25s%-20s%-10s%-10s\n", "ID", "Title", "Author", "Price", "Status");
+    for (i = 0; i &lt; n; i++)
+        printf("%-8d%-25s%-20s%-10.2f%-10s\n",
+               list[i].Book_ID, list[i].Title,
+               list[i].Author, list[i].Price, list[i].Status);
+}
+
+int search(int id) {
+    int i;
+    for (i = 0; i &lt; n; i++)
+        if (list[i].Book_ID == id)
+            return i;
+    return -1;
+}
+
+void issueBook() {
+    int id, pos;
+    printf("Enter Book ID to issue: ");
+    scanf("%d", &id);
+    pos = search(id);
+    if (pos == -1)
+        printf("Book not found.\n");
+    else if (strcmp(list[pos].Status, "Issued") == 0)
+        printf("Book is already issued.\n");
+    else {
+        strcpy(list[pos].Status, "Issued");
+        printf("Book \"%s\" issued successfully.\n", list[pos].Title);
+    }
+}
+
+void returnBook() {
+    int id, pos;
+    printf("Enter Book ID to return: ");
+    scanf("%d", &id);
+    pos = search(id);
+    if (pos == -1)
+        printf("Book not found.\n");
+    else if (strcmp(list[pos].Status, "Available") == 0)
+        printf("Book was not issued.\n");
+    else {
+        strcpy(list[pos].Status, "Available");
+        printf("Book \"%s\" returned successfully.\n", list[pos].Title);
+    }
+}</code></pre>
+        </article>
+
+        <article class="lab-card">
+          <div class="lab-meta">
+            <span>Program A-2</span>
+            <span>Stack Operations</span>
+          </div>
+          <h3>Menu-driven implementation of stack with palindrome check</h3>
+          <p>
+            Use an integer stack with array implementation. The program should support push, pop,
+            palindrome checking, overflow/underflow detection, and display of current stack content.
+          </p>
+          <ul class="feature-list">
+            <li>Operations: push, pop, display, palindrome, overflow, underflow</li>
+            <li>Principle: LIFO (Last In First Out)</li>
+            <li>Applications: expression evaluation, backtracking, recursion simulation</li>
+          </ul>
+        </article>
+
+        <article class="lab-card">
+          <div class="lab-meta">
+            <span>Program A-3</span>
+            <span>Queue Simulation</span>
+          </div>
+          <h3>Printer queue using queue data structure</h3>
+          <p>
+            Simulate a printer job queue with operations to add a print job, process a job, display
+            pending jobs, count waiting jobs, and demonstrate overflow and underflow.
+          </p>
+          <ul class="feature-list">
+            <li>Queue uses FIFO logic</li>
+            <li>Maintains front and rear positions</li>
+            <li>Useful for process scheduling and buffering</li>
+          </ul>
+        </article>
+
+        <article class="lab-card">
+          <div class="lab-meta">
+            <span>Program A-4</span>
+            <span>Linked List</span>
+          </div>
+          <h3>Singly linked list of student records</h3>
+          <p>
+            Create a linked list using front insertion, display the records and count the nodes,
+            insert/delete at the beginning or end, and search by USN.
+          </p>
+        </article>
+
+        <article class="lab-card">
+          <div class="lab-meta">
+            <span>Program A-5</span>
+            <span>Binary Tree</span>
+          </div>
+          <h3>Binary tree creation with level-order insertion and traversal</h3>
+          <p>
+            Create a binary tree by inserting integer elements entered by the user in level order,
+            and implement <code>createTree()</code>, <code>preorder()</code>, <code>inorder()</code>,
+            and <code>postorder()</code> traversals.
+          </p>
+        </article>
+
+        <article class="lab-card">
+          <div class="lab-meta">
+            <span>Program A-6</span>
+            <span>Graph</span>
+          </div>
+          <h3>Graph representation using adjacency matrix and DFS/BFS</h3>
+          <p>
+            Build a graph of cities in adjacency matrix form and print all nodes reachable from a
+            starting city using DFS or BFS traversal.
+          </p>
+        </article>
+
+        <article class="lab-card">
+          <div class="lab-meta">
+            <span>Part B</span>
+            <span>Open-ended</span>
+          </div>
+          <h3>Open-ended experiments</h3>
+          <p>
+            The manual also includes six open-ended experiments designed to encourage creativity and
+            problem-solving: sparse matrix operations, infix-to-postfix conversion, circular queues,
+            doubly linked list-based deque, BST operations, and hashing-based employee management.
+          </p>
+        </article>
+      </section>
+
+      <section id="viva" class="section">
+        <div class="section-header">
+          <p class="eyebrow">Viva questions</p>
+          <h2>Common interview prompts</h2>
+        </div>
+        <div class="questions-grid">
+          <ul>
+            <li>What is dynamic memory allocation? Which library function is used for it in C?</li>
+            <li>Differentiate between a structure and a union.</li>
+            <li>What is the time complexity of linear search?</li>
+            <li>What is LIFO? Give a real-world example.</li>
+            <li>What is stack overflow and stack underflow?</li>
+            <li>What are the applications of a stack?</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Data Structures Laboratory (1BCSL306) • Converted into website format for easy browsing.</p>
+    </footer>
+  </body>
+</html>
